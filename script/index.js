@@ -74,7 +74,7 @@ const modalDetailsView = (data) => {
   <h2 class="font-bold text-2xl">${data.word} (<i class="fa-solid fa-microphone-lines"></i>:<span class="font-bangla">${data.pronunciation}</span>)</h2>
     <div>
                  <h2 class="font-semibold">Meaning</h2>
-                <p class="text-xl font-bangla">${data.meaning}</p>
+                <p class="text-xl font-bangla">${data.meaning ? data.meaning : "অর্থ পাওয়া যায় নি"}</p>
     </div>
   <div>
                <h2 class="font-bold">Example</h2>
@@ -142,15 +142,14 @@ document.getElementById("btnSearch").addEventListener("click", () => {
   removeActive();
   const input = document.getElementById("inputSearch");
   const searchValue = input.value.trim().toLowerCase();
-  console.log(searchValue);
 
   fetch("https://openapi.programming-hero.com/api/words/all")
     .then((res) => res.json())
     .then((data) => {
       const allWords = data.data;
 
-      const result = allWords.filter((word) =>
-        word.word.toLowerCase().includes(searchValue),
+      const result = allWords.filter((item) =>
+        item.word.toLowerCase().includes(searchValue),
       );
       displayWord(result);
     });
