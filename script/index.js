@@ -137,3 +137,21 @@ const displayWord = (words) => {
 };
 
 loadLessons();
+
+document.getElementById("btnSearch").addEventListener("click", () => {
+  removeActive();
+  const input = document.getElementById("inputSearch");
+  const searchValue = input.value.trim().toLowerCase();
+  console.log(searchValue);
+
+  fetch("https://openapi.programming-hero.com/api/words/all")
+    .then((res) => res.json())
+    .then((data) => {
+      const allWords = data.data;
+
+      const result = allWords.filter((word) =>
+        word.word.toLowerCase().includes(searchValue),
+      );
+      displayWord(result);
+    });
+});
